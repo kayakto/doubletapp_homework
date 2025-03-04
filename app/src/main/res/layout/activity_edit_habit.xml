@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/text_border"
+            android:gravity="center"
+            android:paddingStart="42dp"
+            android:paddingTop="0dp"
+            android:paddingEnd="42dp"
+            android:paddingBottom="8dp"
+            android:text="@string/habit_editor_title"
+            android:includeFontPadding="false"
+            android:textColor="@color/dark_gray"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/habit_name_label"
+                android:layout_marginEnd="8dp"
+                android:textSize="16sp"
+                android:textColor="@color/dark_gray" />
+
+            <EditText
+                android:id="@+id/edHabitName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/edit_text_background"
+                android:hint="@string/habit_name_hint" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/habit_description_label"
+                android:layout_marginEnd="8dp"
+                android:textColor="@color/dark_gray" />
+
+            <EditText
+                android:id="@+id/edHabitDescription"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/edit_text_background"
+                android:hint="@string/habit_description_hint" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/habit_priority_label"
+                android:layout_marginEnd="8dp"
+                android:textColor="@color/dark_gray" />
+
+            <Spinner
+                android:id="@+id/edHabitPriority"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/edit_text_background" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/habit_type_label"
+                android:layout_marginBottom="8dp"
+                android:textColor="@color/dark_gray" />
+
+            <RadioGroup
+                android:id="@+id/radioGroupHabitType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RadioButton
+                    android:id="@+id/radioHealth"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/habit_type_health"
+                    android:textColor="@color/dark_gray" />
+
+                <RadioButton
+                    android:id="@+id/radioPersonalGrowth"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/habit_type_personal_growth"
+                    android:textColor="@color/dark_gray" />
+
+                <RadioButton
+                    android:id="@+id/radioWork"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/habit_type_work"
+                    android:textColor="@color/dark_gray" />
+
+                <RadioButton
+                    android:id="@+id/radioSport"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/habit_type_sport"
+                    android:textColor="@color/dark_gray" />
+
+                <RadioButton
+                    android:id="@+id/radioOther"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/habit_type_other"
+                    android:textColor="@color/dark_gray" />
+
+            </RadioGroup>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/habit_executions_label"
+                android:layout_marginEnd="8dp"
+                android:textColor="@color/dark_gray" />
+
+            <EditText
+                android:id="@+id/edHabitCntExecutions"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="@string/habit_executions_hint"
+                android:inputType="number"
+                android:background="@drawable/edit_text_background" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/habit_periodicity_label"
+                android:layout_marginEnd="8dp"
+                android:textColor="@color/dark_gray" />
+
+            <EditText
+                android:id="@+id/edHabitPeriodicity"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="@string/habit_periodicity_hint"
+                android:inputType="text"
+                android:background="@drawable/edit_text_background" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/habit_color_rgb_label"
+                android:layout_marginEnd="8dp"
+                android:textColor="@color/dark_gray" />
+
+            <TextView
+                android:id="@+id/tvColorRGB"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="@string/habit_color_rgb_hint"
+                android:background="@drawable/edit_text_background"
+                android:textColor="@color/dark_gray"
+                android:padding="8dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/habit_color_hex_label"
+                android:layout_marginEnd="8dp"
+                android:textColor="@color/dark_gray" />
+
+            <TextView
+                android:id="@+id/tvColorHEX"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="@string/habit_color_hex_hint"
+                android:background="@drawable/edit_text_background"
+                android:textColor="@color/dark_gray"
+                android:padding="8dp" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/habit_color_picker_label"
+            android:gravity="center"
+            android:layout_marginBottom="16dp"
+            android:textColor="@color/dark_gray" />
+
+        <HorizontalScrollView
+            android:id="@+id/scrollView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp">
+
+            <LinearLayout
+                android:id="@+id/colorContainer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="8dp" />
+        </HorizontalScrollView>
+
+        <Button
+            android:id="@+id/buttonSave"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/habit_save_button"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            android:background="@drawable/back"
+            android:layout_marginTop="16dp" />
+    </LinearLayout>
+</ScrollView>

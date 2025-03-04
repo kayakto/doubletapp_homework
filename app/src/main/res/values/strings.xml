@@ -1,0 +1,40 @@
+<resources>
+    <string name="app_name">Homework</string>
+    <string name="selected_item">Выбранный элемент:</string>
+    <string name="habit_editor">Редактор привычки</string>
+    <string name="name">Название:</string>
+    <string name="input_name">Введите название</string>
+    <string name="description">Описание:</string>
+    <string name="input_description">Введите описание</string>
+    <string name="MyHabits">Мои привычки</string>
+    <string name="AddNewHabit">Создать новую привычку</string>
+    <string name="habit_editor_title">Редактор привычек</string>
+    <string name="habit_name_label">Название:</string>
+    <string name="habit_name_hint">Введите название</string>
+    <string name="habit_description_label">Описание:</string>
+    <string name="habit_description_hint">Введите описание</string>
+    <string name="habit_priority_label">Приоритет:</string>
+    <string name="habit_type_label">Тип привычки:</string>
+    <string name="habit_type_health">Здоровье</string>
+    <string name="habit_type_personal_growth">Саморазвитие</string>
+    <string name="habit_type_work">Работа</string>
+    <string name="habit_type_sport">Спорт</string>
+    <string name="habit_type_other">Другое</string>
+    <string name="habit_executions_label">Количество повторений:</string>
+    <string name="habit_executions_hint">Введите количество</string>
+    <string name="habit_periodicity_label">Периодичность:</string>
+    <string name="habit_periodicity_hint">Введите периодичность</string>
+    <string name="habit_color_rgb_label">Цвет (RGB):</string>
+    <string name="habit_color_rgb_hint">RGB</string>
+    <string name="habit_color_hex_label">Цвет (HEX):</string>
+    <string name="habit_color_hex_hint">HEX</string>
+    <string name="habit_color_picker_label">Выберите цвет в квадрате:</string>
+    <string name="habit_save_button">Сохранить</string>
+    <string-array name="HabitPriorities">
+        <item>Очень низкий</item>
+        <item>Низкий</item>
+        <item>Средний</item>
+        <item>Высокий</item>
+        <item>Очень высокий</item>
+    </string-array>
+</resources>
