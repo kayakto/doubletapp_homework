@@ -30,7 +30,6 @@ class HabitAdapter(private val habits: MutableList<Habit>) : RecyclerView.Adapte
         val habit = habits[position]
         holder.bind(habit)
 
-
         holder.itemView.setOnClickListener {
             onItemClickListener?.invoke(habit)
         }

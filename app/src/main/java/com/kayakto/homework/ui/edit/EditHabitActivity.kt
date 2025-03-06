@@ -3,9 +3,7 @@ package com.kayakto.homework.ui.edit
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Color
-import android.os.Build
 import android.os.Bundle
-import android.os.Parcelable
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -18,6 +16,7 @@ import com.kayakto.homework.data.model.HabitType
 
 import com.kayakto.homework.databinding.ActivityEditHabitBinding
 import com.kayakto.homework.util.HueGradientDrawable
+import com.kayakto.homework.util.extensions.getParcelableCompat
 
 class EditHabitActivity : ComponentActivity() {
 
@@ -27,14 +26,6 @@ class EditHabitActivity : ComponentActivity() {
     private var habitId: String? = null
     private var selectedSquare: View? = null
     private var selectedColor = Color.BLACK
-
-    private inline fun <reified T : Parcelable> Bundle.getParcelableCompat(key: String): T? {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            getParcelable(key, T::class.java)
-        } else {
-            @Suppress("DEPRECATION") getParcelable(key) as? T
-        }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -117,7 +108,8 @@ class EditHabitActivity : ComponentActivity() {
             binding.edHabitCntExecutions.setText(habit.cntExecutions.toString())
             binding.edHabitPeriodicity.setText(habit.periodicity)
             selectedColor = habit.color
-            binding.tvColorRGB.text = "(${Color.red(habit.color)}, ${Color.green(habit.color)}, ${Color.blue(habit.color)})"
+            binding.tvColorRGB.text = "(${Color.red(habit.color)}, " +
+                    "${Color.green(habit.color)}, ${Color.blue(habit.color)})"
             binding.tvColorHEX.text = String.format("#%06X", 0xFFFFFF and habit.color)
             binding.edHabitPriority.setSelection(habit.priority - 1)
             binding.radioGroupHabitType.check(
@@ -139,7 +131,8 @@ class EditHabitActivity : ComponentActivity() {
         val periodicity = binding.edHabitPeriodicity.text.toString()
 
         if (name.isEmpty() || description.isEmpty() || periodicity.isEmpty()) {
-            Toast.makeText(this, "Все поля должны быть заполнены", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Все поля должны быть заполнены",
+                Toast.LENGTH_SHORT).show()
             return
         }
 

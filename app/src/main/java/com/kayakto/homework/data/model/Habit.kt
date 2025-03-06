@@ -17,7 +17,7 @@ data class Habit(
 ) : Parcelable {
     init {
         require(priority in 1..5) { "Приоритет должен быть от 1 до 5" }
-        require(cntExecutions > 0) { "Периодичность должна быть больше 0" }
+        require(cntExecutions >= 0) { "Периодичность должна быть больше или равна 0" }
     }
 
     constructor(parcel: Parcel) : this(
