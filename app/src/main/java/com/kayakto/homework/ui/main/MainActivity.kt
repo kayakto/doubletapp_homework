@@ -1,60 +1,54 @@
 package com.kayakto.homework.ui.main
 
-import android.content.Intent
 import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.kayakto.homework.data.adapter.HabitAdapter
-import com.kayakto.homework.data.model.Habit
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
+import com.google.android.material.navigation.NavigationView
+import com.kayakto.homework.R
 import com.kayakto.homework.databinding.ActivityMainBinding
-import com.kayakto.homework.ui.edit.EditHabitActivity
-import com.kayakto.homework.util.extensions.getParcelableExtraCompat
+import com.kayakto.homework.ui.about.AboutFragment
+import com.kayakto.homework.util.extensions.setupBackPressWithDrawer
 
-class MainActivity : ComponentActivity() {
+class MainActivity : AppCompatActivity() {
 
-    private lateinit var adapter: HabitAdapter
     private lateinit var binding: ActivityMainBinding
-
-    private val editHabitLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.resultCode == RESULT_OK) {
-            val updatedHabit = result.data?.getParcelableExtraCompat<Habit>("habit")
-            if (updatedHabit != null) {
-                if (adapter.containsHabit(updatedHabit.id)) {
-                    adapter.updateHabit(updatedHabit)
-                } else {
-                    adapter.addHabit(updatedHabit)
-                }
-                sortHabitsByPriority()
-            }
-        }
-    }
+    private lateinit var drawerLayout: DrawerLayout // контейнер для бокового меню
+    private lateinit var navView: NavigationView // навигация в боковом меню
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val habits = mutableListOf<Habit>()
+        drawerLayout = binding.drawerLayout
+        navView = binding.navView
 
-        adapter = HabitAdapter(habits)
-        binding.recyclerView.layoutManager = LinearLayoutManager(this)
-        binding.recyclerView.adapter = adapter
-
-        binding.fab.setOnClickListener {
-            val intent = Intent(this, EditHabitActivity::class.java)
-            editHabitLauncher.launch(intent)
+        // нажатие на кнопки в боковой панели перекидывают на другие фрагменты
+        navView.setNavigationItemSelectedListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.nav_home -> {
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.fragment_container, HabitListFragment())
+                        .commit()
+                }
+                R.id.nav_about -> {
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.fragment_container, AboutFragment())
+                        .commit()
+                }
+            }
+            drawerLayout.closeDrawer(GravityCompat.START)
+            true
         }
 
-        adapter.setOnItemClickListener { habit ->
-            val intent = Intent(this, EditHabitActivity::class.java)
-            intent.putExtra("habit", habit)
-            editHabitLauncher.launch(intent)
-        }
-    }
+        setupBackPressWithDrawer(drawerLayout)
 
-    private fun sortHabitsByPriority() {
-        val sortedHabits = adapter.getHabits().sortedByDescending { it.priority }
-        adapter.updateHabits(sortedHabits)
+        // загрузка фрагмента список привычек
+        if (savedInstanceState == null) {
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, HabitListFragment())
+                .commit()
+        }
     }
 }

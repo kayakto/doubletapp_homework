@@ -1,6 +1,7 @@
 package com.kayakto.homework.data.adapter
 
 import android.annotation.SuppressLint
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -50,18 +51,25 @@ class HabitAdapter(private val habits: MutableList<Habit>) : RecyclerView.Adapte
 
     @SuppressLint("NotifyDataSetChanged")
     fun updateHabits(updatedHabits: List<Habit>) {
-        habits.clear()
-        habits.addAll(updatedHabits)
-        notifyDataSetChanged()
+        if (updatedHabits.isNotEmpty()) {
+            habits.clear()
+            habits.addAll(updatedHabits)
+            notifyDataSetChanged()
+        } else {
+            Log.w("HabitAdapter", "Attempted to update with an empty list!")
+        }
     }
 
     fun containsHabit(id: String): Boolean {
         return habits.any { it.id == id }
     }
 
-    @SuppressLint("NotifyDataSetChanged")
     fun addHabit(habit: Habit) {
-        habits.add(habit)
-        notifyDataSetChanged()
+        if (!habits.any { it.id == habit.id }) {
+            habits.add(habit)
+            notifyItemInserted(habits.size - 1)
+        } else {
+            Log.w("HabitAdapter", "Привычка ${habit.id} уже существует")
+        }
     }
 }

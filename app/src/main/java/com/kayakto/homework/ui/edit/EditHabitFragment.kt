@@ -1,36 +1,47 @@
 package com.kayakto.homework.ui.edit
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.LinearLayout
 import android.widget.Toast
-import androidx.activity.ComponentActivity
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import com.kayakto.homework.R
 import com.kayakto.homework.data.model.Habit
 import com.kayakto.homework.data.model.HabitType
-
-import com.kayakto.homework.databinding.ActivityEditHabitBinding
+import com.kayakto.homework.data.model.HabitViewModel
+import com.kayakto.homework.databinding.FragmentEditHabitBinding
 import com.kayakto.homework.util.HueGradientDrawable
 import com.kayakto.homework.util.extensions.getParcelableCompat
 
-class EditHabitActivity : ComponentActivity() {
+class EditHabitFragment : Fragment() {
 
-    private lateinit var binding: ActivityEditHabitBinding
+    private lateinit var binding: FragmentEditHabitBinding
     private var selectedPriority = 1
-    private var selectedType = HabitType.OTHER
+    private var selectedType = HabitType.GOOD
     private var habitId: String? = null
     private var selectedSquare: View? = null
     private var selectedColor = Color.BLACK
+    private val viewModel: HabitViewModel by activityViewModels()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityEditHabitBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = FragmentEditHabitBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         setupColorPicker()
         binding.colorContainer.background = HueGradientDrawable()
         setupPrioritySpinner()
@@ -48,7 +59,7 @@ class EditHabitActivity : ComponentActivity() {
 
         repeat(16) { i ->
             val color = Color.HSVToColor(floatArrayOf(i * hueStep, 1f, 1f))
-            val square = View(this).apply {
+            val square = View(requireContext()).apply {
                 layoutParams = LinearLayout.LayoutParams(squareSize, squareSize).apply {
                     setMargins(margin, margin, margin, margin)
                 }
@@ -77,7 +88,7 @@ class EditHabitActivity : ComponentActivity() {
 
     private fun setupPrioritySpinner() {
         val priorities = resources.getStringArray(R.array.HabitPriorities)
-        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, priorities)
+        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, priorities)
         binding.edHabitPriority.adapter = adapter
         binding.edHabitPriority.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
@@ -90,18 +101,19 @@ class EditHabitActivity : ComponentActivity() {
     private fun setupRadioGroup() {
         binding.radioGroupHabitType.setOnCheckedChangeListener { _, checkedId ->
             selectedType = when (checkedId) {
-                R.id.radioHealth -> HabitType.HEALTH
-                R.id.radioPersonalGrowth -> HabitType.PERSONAL_GROWTH
-                R.id.radioWork -> HabitType.WORK
-                R.id.radioSport -> HabitType.SPORT
-                else -> HabitType.OTHER
+                R.id.radioGood -> HabitType.GOOD
+                R.id.radioBad -> HabitType.BAD
+                else -> HabitType.GOOD
             }
         }
     }
 
+    /**
+     * Загружает данные привычки для редактирования
+     */
     @SuppressLint("SetTextI18n")
     private fun loadHabitData() {
-        intent.extras?.getParcelableCompat<Habit>("habit")?.let { habit ->
+        arguments?.getParcelableCompat<Habit>("habit")?.let { habit ->
             habitId = habit.id
             binding.edHabitName.setText(habit.name)
             binding.edHabitDescription.setText(habit.description)
@@ -114,16 +126,27 @@ class EditHabitActivity : ComponentActivity() {
             binding.edHabitPriority.setSelection(habit.priority - 1)
             binding.radioGroupHabitType.check(
                 when (habit.type) {
-                    HabitType.HEALTH -> R.id.radioHealth
-                    HabitType.PERSONAL_GROWTH -> R.id.radioPersonalGrowth
-                    HabitType.WORK -> R.id.radioWork
-                    HabitType.SPORT -> R.id.radioSport
-                    else -> R.id.radioOther
+                    HabitType.GOOD -> R.id.radioGood
+                    HabitType.BAD -> R.id.radioBad
                 }
             )
+
+            // выделение выбранного цвета рамкой
+            val colorContainer = binding.colorContainer
+            for (i in 0 until colorContainer.childCount) {
+                val square = colorContainer.getChildAt(i)
+                if (square.background is ColorDrawable && (square.background as ColorDrawable).color == habit.color) {
+                    square.setBackgroundResource(R.drawable.selected_square_border)
+                    selectedSquare = square
+                    break
+                }
+            }
         }
     }
 
+    /**
+     * Сохраняет привычку
+     */
     private fun saveHabit() {
         val name = binding.edHabitName.text.toString()
         val description = binding.edHabitDescription.text.toString()
@@ -131,7 +154,7 @@ class EditHabitActivity : ComponentActivity() {
         val periodicity = binding.edHabitPeriodicity.text.toString()
 
         if (name.isEmpty() || description.isEmpty() || periodicity.isEmpty()) {
-            Toast.makeText(this, "Все поля должны быть заполнены",
+            Toast.makeText(requireContext(), "Все поля должны быть заполнены",
                 Toast.LENGTH_SHORT).show()
             return
         }
@@ -147,7 +170,12 @@ class EditHabitActivity : ComponentActivity() {
             color = selectedColor
         )
 
-        setResult(RESULT_OK, Intent().apply { putExtra("habit", updatedHabit) })
-        finish()
+        if (habitId == null)
+            viewModel.addHabit(updatedHabit)
+        else
+            viewModel.updateHabit(updatedHabit)
+
+        // возврат на экран со списком
+        parentFragmentManager.popBackStack()
     }
 }
