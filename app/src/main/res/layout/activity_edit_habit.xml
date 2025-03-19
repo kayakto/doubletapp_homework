@@ -113,40 +113,18 @@
                 android:layout_height="wrap_content">
 
                 <RadioButton
-                    android:id="@+id/radioHealth"
+                    android:id="@+id/radioGood"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/habit_type_health"
+                    android:text="Хорошая"
                     android:textColor="@color/dark_gray" />
 
                 <RadioButton
-                    android:id="@+id/radioPersonalGrowth"
+                    android:id="@+id/radioBad"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/habit_type_personal_growth"
+                    android:text="Плохая"
                     android:textColor="@color/dark_gray" />
-
-                <RadioButton
-                    android:id="@+id/radioWork"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/habit_type_work"
-                    android:textColor="@color/dark_gray" />
-
-                <RadioButton
-                    android:id="@+id/radioSport"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/habit_type_sport"
-                    android:textColor="@color/dark_gray" />
-
-                <RadioButton
-                    android:id="@+id/radioOther"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/habit_type_other"
-                    android:textColor="@color/dark_gray" />
-
             </RadioGroup>
         </LinearLayout>
 

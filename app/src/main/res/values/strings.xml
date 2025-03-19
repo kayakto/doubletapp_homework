@@ -30,6 +30,12 @@
     <string name="habit_color_hex_hint">HEX</string>
     <string name="habit_color_picker_label">Выберите цвет в квадрате:</string>
     <string name="habit_save_button">Сохранить</string>
+    <string name="nav_home">Главная</string>
+    <string name="nav_about">О приложении</string>
+    <string name="my_habits">Мои привычки</string>
+    <string name="tabLayoutText">Вкладки привычек</string>
+    <string name="bad">Плохая</string>
+    <string name="good">Хорошая</string>
     <string-array name="HabitPriorities">
         <item>Очень низкий</item>
         <item>Низкий</item>

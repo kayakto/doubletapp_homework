@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="176dp"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@color/green"
+    android:gravity="bottom">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/my_habits"
+        android:textColor="@color/dark_gray"
+        android:textSize="18sp" />
+
+</LinearLayout>
